@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -23,28 +24,45 @@ sealed class UiState {
     data class Error(val message: String) : UiState()
 }
 
+data class MethodStat(val method: QueryMethod, val count: Int, val isCategoryStat: Boolean = false)
+
 class MainViewModel(private val repository: AppRepository) : ViewModel() {
 
     private val _allApps = MutableStateFlow<List<AppInfo>>(emptyList())
     private val _rootAvailable = MutableStateFlow(false)
     private val _searchQuery = MutableStateFlow("")
-    private val _activeCategories = MutableStateFlow<Set<QueryMethod.Category>>(emptySet())
+    private val _activeMethods = MutableStateFlow<Set<QueryMethod>>(emptySet())
     private val _loading = MutableStateFlow(true)
     private val _error = MutableStateFlow<String?>(null)
 
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-    val activeCategories: StateFlow<Set<QueryMethod.Category>> = _activeCategories.asStateFlow()
+    val activeMethods: StateFlow<Set<QueryMethod>> = _activeMethods.asStateFlow()
     val rootAvailable: StateFlow<Boolean> = _rootAvailable.asStateFlow()
 
-    // 使用分段合并 (combine) 以避免 6 个以上参数时的类型推断问题
-    private val filterState = combine(_searchQuery, _activeCategories, _rootAvailable) { query, categories, root ->
-        Triple(query, categories, root)
+    val methodStats: StateFlow<List<MethodStat>> = _allApps.map { apps ->
+        val stats = mutableListOf<MethodStat>()
+        
+        // PackageManager Category: aggregate all its methods into one
+        val pmApps = apps.count { app -> app.discoveredBy.any { it.category == QueryMethod.Category.PACKAGE_MANAGER } }
+        val firstPmMethod = QueryMethod.entries.first { it.category == QueryMethod.Category.PACKAGE_MANAGER }
+        stats.add(MethodStat(firstPmMethod, pmApps, isCategoryStat = true))
+        
+        // Other methods: keep individual
+        QueryMethod.entries.filter { it.category != QueryMethod.Category.PACKAGE_MANAGER }.forEach { method ->
+            stats.add(MethodStat(method, apps.count { app -> method in app.discoveredBy }))
+        }
+        
+        stats.sortedByDescending { it.count }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    private val filterState = combine(_searchQuery, _activeMethods, _rootAvailable) { query, methods, root ->
+        Triple(query, methods, root)
     }
 
     val uiState: StateFlow<UiState> = combine(
         _loading, _error, _allApps, filterState
     ) { loading, error, apps, filters ->
-        val (query, categories, root) = filters
+        val (query, methods, root) = filters
 
         when {
             loading -> UiState.Loading
@@ -54,8 +72,8 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
                     val matchesQuery = query.isBlank() ||
                         app.label.contains(query, ignoreCase = true) ||
                         app.packageName.contains(query, ignoreCase = true)
-                    val matchesFilters = categories.isEmpty() ||
-                        app.discoveredBy.any { method -> method.category in categories }
+                    val matchesFilters = methods.isEmpty() ||
+                        app.discoveredBy.any { it in methods }
                     matchesQuery && matchesFilters
                 }
                 UiState.Ready(filtered, apps.size, root)
@@ -88,13 +106,13 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
         _searchQuery.value = query
     }
 
-    fun toggleFilter(category: QueryMethod.Category) {
-        val current = _activeCategories.value.toMutableSet()
-        if (category in current) current.remove(category) else current.add(category)
-        _activeCategories.value = current
+    fun toggleFilter(method: QueryMethod) {
+        val current = _activeMethods.value.toMutableSet()
+        if (method in current) current.remove(method) else current.add(method)
+        _activeMethods.value = current
     }
 
     fun clearFilters() {
-        _activeCategories.value = emptySet()
+        _activeMethods.value = emptySet()
     }
 }

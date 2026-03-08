@@ -4,28 +4,41 @@ package com.appinspector.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.appinspector.R;
+import com.appinspector.ui.PieChartView;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
-  private final CoordinatorLayout rootView;
+  private final ConstraintLayout rootView;
 
   @NonNull
   public final AppBarLayout appBar;
+
+  @NonNull
+  public final LinearLayout appBarContent;
+
+  @NonNull
+  public final BottomNavigationView bottomNavigation;
 
   @NonNull
   public final TextView btnAbout;
@@ -34,13 +47,40 @@ public final class ActivityMainBinding implements ViewBinding {
   public final ChipGroup chipGroupFilter;
 
   @NonNull
+  public final CoordinatorLayout layoutApps;
+
+  @NonNull
+  public final NestedScrollView layoutStats;
+
+  @NonNull
+  public final LinearLayout layoutStatsContent;
+
+  @NonNull
+  public final View navDivider;
+
+  @NonNull
+  public final PieChartView pieChart;
+
+  @NonNull
   public final CircularProgressIndicator progress;
+
+  @NonNull
+  public final ConstraintLayout rootLayout;
 
   @NonNull
   public final RecyclerView rvApps;
 
   @NonNull
+  public final RecyclerView rvStatsPage;
+
+  @NonNull
+  public final HorizontalScrollView scrollChips;
+
+  @NonNull
   public final SearchView searchView;
+
+  @NonNull
+  public final TabLayout tabLayoutCategories;
 
   @NonNull
   public final TextView tvRootStatus;
@@ -48,24 +88,41 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final TextView tvStatus;
 
-  private ActivityMainBinding(@NonNull CoordinatorLayout rootView, @NonNull AppBarLayout appBar,
+  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull AppBarLayout appBar,
+      @NonNull LinearLayout appBarContent, @NonNull BottomNavigationView bottomNavigation,
       @NonNull TextView btnAbout, @NonNull ChipGroup chipGroupFilter,
-      @NonNull CircularProgressIndicator progress, @NonNull RecyclerView rvApps,
-      @NonNull SearchView searchView, @NonNull TextView tvRootStatus, @NonNull TextView tvStatus) {
+      @NonNull CoordinatorLayout layoutApps, @NonNull NestedScrollView layoutStats,
+      @NonNull LinearLayout layoutStatsContent, @NonNull View navDivider,
+      @NonNull PieChartView pieChart, @NonNull CircularProgressIndicator progress,
+      @NonNull ConstraintLayout rootLayout, @NonNull RecyclerView rvApps,
+      @NonNull RecyclerView rvStatsPage, @NonNull HorizontalScrollView scrollChips,
+      @NonNull SearchView searchView, @NonNull TabLayout tabLayoutCategories,
+      @NonNull TextView tvRootStatus, @NonNull TextView tvStatus) {
     this.rootView = rootView;
     this.appBar = appBar;
+    this.appBarContent = appBarContent;
+    this.bottomNavigation = bottomNavigation;
     this.btnAbout = btnAbout;
     this.chipGroupFilter = chipGroupFilter;
+    this.layoutApps = layoutApps;
+    this.layoutStats = layoutStats;
+    this.layoutStatsContent = layoutStatsContent;
+    this.navDivider = navDivider;
+    this.pieChart = pieChart;
     this.progress = progress;
+    this.rootLayout = rootLayout;
     this.rvApps = rvApps;
+    this.rvStatsPage = rvStatsPage;
+    this.scrollChips = scrollChips;
     this.searchView = searchView;
+    this.tabLayoutCategories = tabLayoutCategories;
     this.tvRootStatus = tvRootStatus;
     this.tvStatus = tvStatus;
   }
 
   @Override
   @NonNull
-  public CoordinatorLayout getRoot() {
+  public ConstraintLayout getRoot() {
     return rootView;
   }
 
@@ -96,6 +153,18 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.app_bar_content;
+      LinearLayout appBarContent = ViewBindings.findChildViewById(rootView, id);
+      if (appBarContent == null) {
+        break missingId;
+      }
+
+      id = R.id.bottom_navigation;
+      BottomNavigationView bottomNavigation = ViewBindings.findChildViewById(rootView, id);
+      if (bottomNavigation == null) {
+        break missingId;
+      }
+
       id = R.id.btn_about;
       TextView btnAbout = ViewBindings.findChildViewById(rootView, id);
       if (btnAbout == null) {
@@ -108,11 +177,43 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.layout_apps;
+      CoordinatorLayout layoutApps = ViewBindings.findChildViewById(rootView, id);
+      if (layoutApps == null) {
+        break missingId;
+      }
+
+      id = R.id.layout_stats;
+      NestedScrollView layoutStats = ViewBindings.findChildViewById(rootView, id);
+      if (layoutStats == null) {
+        break missingId;
+      }
+
+      id = R.id.layout_stats_content;
+      LinearLayout layoutStatsContent = ViewBindings.findChildViewById(rootView, id);
+      if (layoutStatsContent == null) {
+        break missingId;
+      }
+
+      id = R.id.nav_divider;
+      View navDivider = ViewBindings.findChildViewById(rootView, id);
+      if (navDivider == null) {
+        break missingId;
+      }
+
+      id = R.id.pie_chart;
+      PieChartView pieChart = ViewBindings.findChildViewById(rootView, id);
+      if (pieChart == null) {
+        break missingId;
+      }
+
       id = R.id.progress;
       CircularProgressIndicator progress = ViewBindings.findChildViewById(rootView, id);
       if (progress == null) {
         break missingId;
       }
+
+      ConstraintLayout rootLayout = (ConstraintLayout) rootView;
 
       id = R.id.rv_apps;
       RecyclerView rvApps = ViewBindings.findChildViewById(rootView, id);
@@ -120,9 +221,27 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.rv_stats_page;
+      RecyclerView rvStatsPage = ViewBindings.findChildViewById(rootView, id);
+      if (rvStatsPage == null) {
+        break missingId;
+      }
+
+      id = R.id.scroll_chips;
+      HorizontalScrollView scrollChips = ViewBindings.findChildViewById(rootView, id);
+      if (scrollChips == null) {
+        break missingId;
+      }
+
       id = R.id.search_view;
       SearchView searchView = ViewBindings.findChildViewById(rootView, id);
       if (searchView == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_layout_categories;
+      TabLayout tabLayoutCategories = ViewBindings.findChildViewById(rootView, id);
+      if (tabLayoutCategories == null) {
         break missingId;
       }
 
@@ -138,8 +257,10 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((CoordinatorLayout) rootView, appBar, btnAbout,
-          chipGroupFilter, progress, rvApps, searchView, tvRootStatus, tvStatus);
+      return new ActivityMainBinding((ConstraintLayout) rootView, appBar, appBarContent,
+          bottomNavigation, btnAbout, chipGroupFilter, layoutApps, layoutStats, layoutStatsContent,
+          navDivider, pieChart, progress, rootLayout, rvApps, rvStatsPage, scrollChips, searchView,
+          tabLayoutCategories, tvRootStatus, tvStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

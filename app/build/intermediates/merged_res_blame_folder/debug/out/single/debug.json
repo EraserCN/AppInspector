@@ -1,42 +1,202 @@
 [
     {
-        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_item_app.xml.flat",
-        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_app.xml"
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_ic_app_default.xml.flat",
-        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\ic_app_default.xml"
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_bg_circle_indicator_inactive.xml.flat",
-        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\bg_circle_indicator_inactive.xml"
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_chip_bg.xml.flat",
-        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\chip_bg.xml"
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\menu\\bottom_nav_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_bottom_sheet_detail.xml.flat",
-        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\bottom_sheet_detail.xml"
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-hdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "com.appinspector.app-merged_res-35:/layout_item_app.xml.flat",
-        "source": "com.appinspector.app-main-37:/layout/item_app.xml"
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-mdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_ic_stats.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\ic_stats.xml"
     },
     {
         "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_activity_main.xml.flat",
         "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_bg_circle_indicator.xml.flat",
-        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\bg_circle_indicator.xml"
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-hdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
         "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_bg_bottom_sheet.xml.flat",
         "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\bg_bottom_sheet.xml"
     },
     {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_item_app.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_app.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_ic_apps.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\ic_apps.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_ic_app_default.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\ic_app_default.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_bg_circle_indicator_inactive.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\bg_circle_indicator_inactive.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_chip_bg.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\chip_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xxxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_bg_stat_progress.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\bg_stat_progress.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_bottom_sheet_detail.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\bottom_sheet_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_layout_stats_sheet.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\layout_stats_sheet.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_item_stat.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_stat.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\color_nav_item_color.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\color\\nav_item_color.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_fragment_app_list.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\fragment_app_list.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-mdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
         "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_item_method_row.xml.flat",
         "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_method_row.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.appinspector.app-main-37:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_bg_circle_indicator.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\bg_circle_indicator.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\mipmap-hdpi\\ic_launcher_round.webp"
     }
 ]

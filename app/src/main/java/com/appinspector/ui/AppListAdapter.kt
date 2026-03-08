@@ -1,5 +1,9 @@
 package com.appinspector.ui
 
+import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.appinspector.R
 import com.appinspector.data.AppInfo
-import com.appinspector.data.QueryMethod
 import com.appinspector.util.MethodColors
-import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 class AppListAdapter(
@@ -39,32 +41,38 @@ class AppListAdapter(
             if (app.icon != null) icon.setImageDrawable(app.icon) else icon.setImageResource(R.drawable.ic_app_default)
             label.text = app.label
             pkgName.text = app.packageName
-            methodCount.text = "${app.discoveredBy.size} 种方法"
+            methodCount.text = "${app.discoveredBy.size} Methods"
 
             chipGroup.removeAllViews()
-            // Group by category, one chip per category showing count
+            // Aggregate by category for the item preview to save space
             app.discoveredBy.groupBy { it.category }.forEach { (cat, methods) ->
                 val firstMethod = methods.first()
-                val chip = Chip(itemView.context).apply {
+                
+                // Use TextView instead of Chip for extreme compaction and no vertical padding issues
+                val tagView = TextView(itemView.context).apply {
                     text = if (methods.size == 1) firstMethod.displayName
-                           else "${cat.displayName}(${methods.size})"
+                           else "${cat.displayName} (${methods.size})"
                     
                     val bg = MethodColors.chipBgColorFor(firstMethod)
                     val txt = MethodColors.chipTextColorFor(firstMethod)
                     
-                    setChipBackgroundColor(android.content.res.ColorStateList.valueOf(bg))
                     setTextColor(txt)
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 9f)
+                    includeFontPadding = false
+                    gravity = Gravity.CENTER
                     
-                    chipStrokeWidth = 0f
-                    textSize = 10f
-                    chipMinHeight = 0f
-                    chipStartPadding = 8f
-                    chipEndPadding = 8f
-                    isClickable = false
-                    isFocusable = false
-                    chipCornerRadius = 12f
+                    background = GradientDrawable().apply {
+                        setColor(bg)
+                        cornerRadius = 4f * itemView.resources.displayMetrics.density
+                    }
+                    
+                    // Compact padding: 4dp horizontal, 1dp vertical
+                    val hp = (4f * itemView.resources.displayMetrics.density).toInt()
+                    val vp = (1f * itemView.resources.displayMetrics.density).toInt()
+                    setPadding(hp, vp, hp, vp)
                 }
-                chipGroup.addView(chip)
+                
+                chipGroup.addView(tagView)
             }
 
             itemView.setOnClickListener { onItemClick(app) }

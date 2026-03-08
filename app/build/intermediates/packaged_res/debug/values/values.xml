@@ -9,6 +9,8 @@
     <color name="colorPrimary">@color/brand_color</color>
     <color name="colorPrimaryDark">@color/brand_color_dark</color>
     <color name="divider">#E5E5EA</color>
+    <color name="nav_item_selected">#007AFF</color>
+    <color name="nav_item_unselected">#86868B</color>
     <color name="status_error">#FF3B30</color>
     <color name="status_success">#34C759</color>
     <color name="surface">#FFFFFF</color>
@@ -36,9 +38,9 @@
         <item name="colorSecondary">@color/accent</item>
         <item name="colorOnSecondary">#FFFFFF</item>
 
-        <item name="android:windowBackground">@color/bg_main</item>
-        <item name="android:navigationBarColor">@color/bg_main</item>
-        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
 
@@ -53,6 +55,6 @@
     </style>
     <style name="Widget.App.BottomSheet" parent="Widget.Material3.BottomSheet">
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
-        <item name="backgroundTint">@color/surface</item>
+        <item name="backgroundTint">?attr/colorSurface</item>
     </style>
 </resources>

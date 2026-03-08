@@ -9,9 +9,9 @@
         <item name="colorSecondary">@color/accent</item>
         <item name="colorOnSecondary">#FFFFFF</item>
 
-        <item name="android:windowBackground">@color/bg_main</item>
-        <item name="android:navigationBarColor">@color/bg_main</item>
-        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
 
@@ -36,6 +36,6 @@
 
     <style name="Widget.App.BottomSheet" parent="Widget.Material3.BottomSheet">
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
-        <item name="backgroundTint">@color/surface</item>
+        <item name="backgroundTint">?attr/colorSurface</item>
     </style>
 </resources>

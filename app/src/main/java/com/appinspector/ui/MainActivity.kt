@@ -1,6 +1,7 @@
 package com.appinspector.ui
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -8,8 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,10 +22,12 @@ import com.appinspector.R
 import com.appinspector.data.AppRepository
 import com.appinspector.data.QueryMethod
 import com.appinspector.util.MethodColors
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -29,14 +35,29 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: AppListAdapter
+    private lateinit var statsAdapter: StatsAdapter
+    private var currentCategory: QueryMethod.Category? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Setup system bars appearance for edge-to-edge/theming
-        WindowCompat.setDecorFitsSystemWindows(window, true)
-        
+        // 1. Force true Edge-to-Edge and transparent bars
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+
         setContentView(R.layout.activity_main)
+
+        // 2. Handle System Bar Insets
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // Background is surface, but we want the list and stats to not be covered by bars
+            // We use padding on containers instead of root fitsSystemWindows
+            findViewById<View>(R.id.app_bar).updatePadding(top = systemBars.top)
+            findViewById<View>(R.id.layout_stats_content).updatePadding(top = systemBars.top)
+            findViewById<View>(R.id.bottom_navigation).updatePadding(bottom = systemBars.bottom)
+            insets
+        }
 
         val repo = AppRepository(applicationContext)
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -46,11 +67,36 @@ class MainActivity : AppCompatActivity() {
             }
         })[MainViewModel::class.java]
 
+        setupBottomNavigation()
         setupRecyclerView()
         setupSearch()
+        setupTabs()
         setupFilterChips()
+        setupStatsPage()
         setupAboutButton()
         observeState()
+    }
+
+    private fun setupBottomNavigation() {
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val layoutApps = findViewById<View>(R.id.layout_apps)
+        val layoutStats = findViewById<View>(R.id.layout_stats)
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_apps -> {
+                    layoutApps.isVisible = true
+                    layoutStats.isVisible = false
+                    true
+                }
+                R.id.nav_stats -> {
+                    layoutApps.isVisible = false
+                    layoutStats.isVisible = true
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -71,93 +117,103 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupFilterChips() {
-        val chipGroup = findViewById<ChipGroup>(R.id.chip_group_filter)
-
-        // "All" chip
-        val allChip = Chip(this).apply {
-            text = "全部"
-            isCheckable = true
-            id = View.generateViewId()
-            chipStrokeWidth = 0f
-            
-            val states = arrayOf(
-                intArrayOf(android.R.attr.state_checked),
-                intArrayOf(-android.R.attr.state_checked)
-            )
-            val colors = intArrayOf(
-                ContextCompat.getColor(context, R.color.brand_color),
-                ContextCompat.getColor(context, R.color.surface_variant)
-            )
-            chipBackgroundColor = ColorStateList(states, colors)
-            
-            val textColors = intArrayOf(
-                ContextCompat.getColor(context, android.R.color.white),
-                ContextCompat.getColor(context, R.color.text_primary)
-            )
-            setTextColor(ColorStateList(states, textColors))
-        }
-        chipGroup.addView(allChip)
-        allChip.setOnClickListener { viewModel.clearFilters() }
-
-        // One chip per category
+    private fun setupTabs() {
+        val tabLayout = findViewById<TabLayout>(R.id.tab_layout_categories)
+        tabLayout.addTab(tabLayout.newTab().setText("全部").setTag(null))
         QueryMethod.Category.entries.forEach { cat ->
-            val firstMethod = QueryMethod.entries.first { it.category == cat }
+            tabLayout.addTab(tabLayout.newTab().setText(cat.displayName).setTag(cat))
+        }
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                currentCategory = tab?.tag as? QueryMethod.Category
+                updateChips()
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
+    private fun setupFilterChips() {
+        lifecycleScope.launch {
+            viewModel.methodStats.collectLatest { stats ->
+                updateChips(stats)
+            }
+        }
+    }
+
+    private fun updateChips(stats: List<MethodStat> = viewModel.methodStats.value) {
+        val chipGroup = findViewById<ChipGroup>(R.id.chip_group_filter)
+        val scrollChips = findViewById<View>(R.id.scroll_chips)
+        chipGroup.removeAllViews()
+
+        if (currentCategory == null) {
+            scrollChips.isVisible = false
+            return
+        }
+
+        scrollChips.isVisible = true
+        val categoryMethods = QueryMethod.entries.filter { it.category == currentCategory }
+
+        categoryMethods.forEach { method ->
+            val count = viewModel.uiState.value.let { state ->
+                if (state is UiState.Ready) state.apps.count { method in it.discoveredBy } else 0
+            }
+            
             val chip = Chip(this).apply {
-                tag = cat
-                text = cat.displayName
+                tag = method
+                text = "${method.displayName} ($count)"
                 isCheckable = true
                 id = View.generateViewId()
                 chipStrokeWidth = 0f
                 
-                val states = arrayOf(
-                    intArrayOf(android.R.attr.state_checked),
-                    intArrayOf(-android.R.attr.state_checked)
-                )
-                val colors = intArrayOf(
-                    MethodColors.chipTextColorFor(firstMethod),
-                    MethodColors.chipBgColorFor(firstMethod)
-                )
+                val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf(-android.R.attr.state_checked))
+                val colors = intArrayOf(MethodColors.chipTextColorFor(method), MethodColors.chipBgColorFor(method))
                 chipBackgroundColor = ColorStateList(states, colors)
+                setTextColor(ColorStateList(states, intArrayOf(Color.WHITE, MethodColors.chipTextColorFor(method))))
                 
-                val textColors = intArrayOf(
-                    ContextCompat.getColor(context, android.R.color.white),
-                    MethodColors.chipTextColorFor(firstMethod)
-                )
-                setTextColor(ColorStateList(states, textColors))
+                isChecked = method in viewModel.activeMethods.value
             }
-            chip.setOnClickListener {
-                viewModel.toggleFilter(cat)
-            }
+            chip.setOnClickListener { viewModel.toggleFilter(method) }
             chipGroup.addView(chip)
         }
+    }
+
+    private fun setupStatsPage() {
+        val rvStats = findViewById<RecyclerView>(R.id.rv_stats_page)
+        val pieChart = findViewById<PieChartView>(R.id.pie_chart)
+        
+        statsAdapter = StatsAdapter { stat ->
+            viewModel.clearFilters()
+            viewModel.toggleFilter(stat.method)
+            findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId = R.id.nav_apps
+            val tabLayout = findViewById<TabLayout>(R.id.tab_layout_categories)
+            for (i in 0 until tabLayout.tabCount) {
+                if (tabLayout.getTabAt(i)?.tag == stat.method.category) {
+                    tabLayout.getTabAt(i)?.select()
+                    break
+                }
+            }
+        }
+        
+        rvStats.layoutManager = LinearLayoutManager(this)
+        rvStats.adapter = statsAdapter
 
         lifecycleScope.launch {
-            viewModel.activeCategories.collectLatest { active ->
-                allChip.isChecked = active.isEmpty()
-                for (i in 1 until chipGroup.childCount) {
-                    val chip = chipGroup.getChildAt(i) as Chip
-                    val cat = chip.tag as? QueryMethod.Category
-                    chip.isChecked = cat != null && cat in active
-                }
+            viewModel.methodStats.collectLatest { stats ->
+                val activeStats = stats.filter { it.count > 0 }
+                statsAdapter.submitList(activeStats)
+                pieChart.setData(activeStats)
             }
         }
     }
 
     private fun setupAboutButton() {
-        findViewById<TextView>(R.id.btn_about).setOnClickListener {
-            showAboutDialog()
-        }
+        findViewById<TextView>(R.id.btn_about).setOnClickListener { showAboutDialog() }
     }
 
     private fun showAboutDialog() {
-        val versionName = try {
-            @Suppress("DEPRECATION")
-            packageManager.getPackageInfo(packageName, 0).versionName
-        } catch (e: Exception) {
-            "Unknown"
-        }
-
+        val versionName = try { packageManager.getPackageInfo(packageName, 0).versionName } catch (e: Exception) { "Unknown" }
         val aboutMessage = buildString {
             append(getString(R.string.app_description))
             append("\n\n")
@@ -165,12 +221,7 @@ class MainActivity : AppCompatActivity() {
             append("\n")
             append(getString(R.string.author_info))
         }
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.about)
-            .setMessage(aboutMessage)
-            .setPositiveButton(R.string.close, null)
-            .show()
+        MaterialAlertDialogBuilder(this).setTitle(R.string.about).setMessage(aboutMessage).setPositiveButton(R.string.close, null).show()
     }
 
     private fun observeState() {
@@ -192,8 +243,7 @@ class MainActivity : AppCompatActivity() {
                         rvApps.isVisible = true
                         tvStatus.text = "共发现 ${state.apps.size} / ${state.totalCount} 个匹配应用"
                         tvRoot.text = if (state.rootAvailable) "✓ 已获取 Root 权限" else "✗ 未获取 Root 权限"
-                        tvRoot.setTextColor(ContextCompat.getColor(this@MainActivity, 
-                            if (state.rootAvailable) R.color.status_success else R.color.text_secondary))
+                        tvRoot.setTextColor(ContextCompat.getColor(this@MainActivity, if (state.rootAvailable) R.color.status_success else R.color.text_secondary))
                         adapter.submitList(state.apps)
                     }
                     is UiState.Error -> {

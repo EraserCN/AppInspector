@@ -2076,6 +2076,9 @@ color mtrl_textinput_disabled_color
 color mtrl_textinput_filled_box_default_background_color
 color mtrl_textinput_focused_box_stroke_color
 color mtrl_textinput_hovered_box_stroke_color
+color nav_item_color
+color nav_item_selected
+color nav_item_unselected
 color notification_action_color_filter
 color notification_icon_bg_color
 color primary_dark_material_dark
@@ -2986,6 +2989,7 @@ drawable avd_show_password
 drawable bg_bottom_sheet
 drawable bg_circle_indicator
 drawable bg_circle_indicator_inactive
+drawable bg_stat_progress
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3001,6 +3005,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_app_default
+drawable ic_apps
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3011,6 +3016,7 @@ drawable ic_call_decline_low
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
+drawable ic_launcher_background
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
 drawable ic_m3_chip_close
@@ -3019,6 +3025,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_search_black_24
+drawable ic_stats
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
 drawable m3_bottom_sheet_drag_handle
@@ -3175,6 +3182,7 @@ id animateToStart
 id antiClockwise
 id anticipate
 id app_bar
+id app_bar_content
 id arc
 id asConfigured
 id async
@@ -3189,6 +3197,7 @@ id beginning
 id bestChoice
 id blocking
 id bottom
+id bottom_navigation
 id bounce
 id bounceBoth
 id bounceEnd
@@ -3333,6 +3342,9 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id layout
+id layout_apps
+id layout_stats
+id layout_stats_content
 id left
 id leftToRight
 id legacy
@@ -3401,6 +3413,9 @@ id mtrl_picker_text_input_range_start
 id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
 id multiply
+id nav_apps
+id nav_divider
+id nav_stats
 id navigation_bar_item_active_indicator_view
 id navigation_bar_item_icon_container
 id navigation_bar_item_icon_view
@@ -3448,8 +3463,10 @@ id parent_matrix
 id password_toggle
 id path
 id pathRelative
+id pb_stat
 id peekHeight
 id percent
+id pie_chart
 id pin
 id pooling_container_listener_holder_tag
 id position
@@ -3467,10 +3484,13 @@ id right
 id rightToLeft
 id right_icon
 id right_side
+id root_layout
 id rounded
 id row_index_key
 id rv_apps
 id rv_methods
+id rv_stats
+id rv_stats_page
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -3480,6 +3500,7 @@ id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
+id scroll_chips
 id scrollable
 id search_badge
 id search_bar
@@ -3534,6 +3555,7 @@ id submenuarrow
 id submit_area
 id supportScrollUp
 id tabMode
+id tab_layout_categories
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
@@ -3591,6 +3613,8 @@ id tv_method_found
 id tv_method_name
 id tv_pkg_name
 id tv_root_status
+id tv_stat_count
+id tv_stat_name
 id tv_status
 id unchecked
 id uniform
@@ -3747,10 +3771,13 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout fragment_app_list
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_app
 layout item_method_row
+layout item_stat
+layout layout_stats_sheet
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -3812,6 +3839,10 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
+menu bottom_nav_menu
+mipmap ic_launcher
+mipmap ic_launcher_foreground
+mipmap ic_launcher_round
 plurals mtrl_badge_content_description
 string abc_action_bar_home_description
 string abc_action_bar_up_description

@@ -4,28 +4,28 @@ package com.appinspector.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.appinspector.R;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.imageview.ShapeableImageView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class ItemAppBinding implements ViewBinding {
   @NonNull
-  private final CardView rootView;
+  private final MaterialCardView rootView;
 
   @NonNull
   public final ChipGroup chipGroupMethods;
 
   @NonNull
-  public final ImageView ivAppIcon;
+  public final ShapeableImageView ivAppIcon;
 
   @NonNull
   public final TextView tvAppLabel;
@@ -36,9 +36,9 @@ public final class ItemAppBinding implements ViewBinding {
   @NonNull
   public final TextView tvPkgName;
 
-  private ItemAppBinding(@NonNull CardView rootView, @NonNull ChipGroup chipGroupMethods,
-      @NonNull ImageView ivAppIcon, @NonNull TextView tvAppLabel, @NonNull TextView tvMethodCount,
-      @NonNull TextView tvPkgName) {
+  private ItemAppBinding(@NonNull MaterialCardView rootView, @NonNull ChipGroup chipGroupMethods,
+      @NonNull ShapeableImageView ivAppIcon, @NonNull TextView tvAppLabel,
+      @NonNull TextView tvMethodCount, @NonNull TextView tvPkgName) {
     this.rootView = rootView;
     this.chipGroupMethods = chipGroupMethods;
     this.ivAppIcon = ivAppIcon;
@@ -49,7 +49,7 @@ public final class ItemAppBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public CardView getRoot() {
+  public MaterialCardView getRoot() {
     return rootView;
   }
 
@@ -81,7 +81,7 @@ public final class ItemAppBinding implements ViewBinding {
       }
 
       id = R.id.iv_app_icon;
-      ImageView ivAppIcon = ViewBindings.findChildViewById(rootView, id);
+      ShapeableImageView ivAppIcon = ViewBindings.findChildViewById(rootView, id);
       if (ivAppIcon == null) {
         break missingId;
       }
@@ -104,8 +104,8 @@ public final class ItemAppBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemAppBinding((CardView) rootView, chipGroupMethods, ivAppIcon, tvAppLabel,
-          tvMethodCount, tvPkgName);
+      return new ItemAppBinding((MaterialCardView) rootView, chipGroupMethods, ivAppIcon,
+          tvAppLabel, tvMethodCount, tvPkgName);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

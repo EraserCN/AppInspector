@@ -4,7 +4,6 @@ package com.appinspector.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.appinspector.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -22,7 +22,7 @@ public final class BottomSheetDetailBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
-  public final ImageView ivDetailIcon;
+  public final ShapeableImageView ivDetailIcon;
 
   @NonNull
   public final RecyclerView rvMethods;
@@ -39,10 +39,10 @@ public final class BottomSheetDetailBinding implements ViewBinding {
   @NonNull
   public final TextView tvDetailSystem;
 
-  private BottomSheetDetailBinding(@NonNull LinearLayout rootView, @NonNull ImageView ivDetailIcon,
-      @NonNull RecyclerView rvMethods, @NonNull TextView tvDetailLabel,
-      @NonNull TextView tvDetailMethodCount, @NonNull TextView tvDetailPkg,
-      @NonNull TextView tvDetailSystem) {
+  private BottomSheetDetailBinding(@NonNull LinearLayout rootView,
+      @NonNull ShapeableImageView ivDetailIcon, @NonNull RecyclerView rvMethods,
+      @NonNull TextView tvDetailLabel, @NonNull TextView tvDetailMethodCount,
+      @NonNull TextView tvDetailPkg, @NonNull TextView tvDetailSystem) {
     this.rootView = rootView;
     this.ivDetailIcon = ivDetailIcon;
     this.rvMethods = rvMethods;
@@ -80,7 +80,7 @@ public final class BottomSheetDetailBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.iv_detail_icon;
-      ImageView ivDetailIcon = ViewBindings.findChildViewById(rootView, id);
+      ShapeableImageView ivDetailIcon = ViewBindings.findChildViewById(rootView, id);
       if (ivDetailIcon == null) {
         break missingId;
       }

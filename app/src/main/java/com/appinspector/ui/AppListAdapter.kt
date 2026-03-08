@@ -44,19 +44,25 @@ class AppListAdapter(
             chipGroup.removeAllViews()
             // Group by category, one chip per category showing count
             app.discoveredBy.groupBy { it.category }.forEach { (cat, methods) ->
+                val firstMethod = methods.first()
                 val chip = Chip(itemView.context).apply {
-                    text = if (methods.size == 1) methods.first().displayName
+                    text = if (methods.size == 1) firstMethod.displayName
                            else "${cat.displayName}(${methods.size})"
-                    setChipBackgroundColorResource(android.R.color.transparent)
-                    chipStrokeWidth = 0f
-                    val bg = MethodColors.chipBgColorFor(methods.first())
+                    
+                    val bg = MethodColors.chipBgColorFor(firstMethod)
+                    val txt = MethodColors.chipTextColorFor(firstMethod)
+                    
                     setChipBackgroundColor(android.content.res.ColorStateList.valueOf(bg))
-                    setTextColor(MethodColors.chipTextColor())
-                    textSize = 9f
-                    chipMinHeight = 56f
+                    setTextColor(txt)
+                    
+                    chipStrokeWidth = 0f
+                    textSize = 10f
+                    chipMinHeight = 0f
+                    chipStartPadding = 8f
+                    chipEndPadding = 8f
                     isClickable = false
                     isFocusable = false
-                    chipCornerRadius = 20f
+                    chipCornerRadius = 12f
                 }
                 chipGroup.addView(chip)
             }
@@ -68,7 +74,8 @@ class AppListAdapter(
     companion object {
         private val DIFF = object : DiffUtil.ItemCallback<AppInfo>() {
             override fun areItemsTheSame(old: AppInfo, new: AppInfo) = old.packageName == new.packageName
-            override fun areContentsTheSame(old: AppInfo, new: AppInfo) = old.discoveredBy == new.discoveredBy && old.label == new.label
+            override fun areContentsTheSame(old: AppInfo, new: AppInfo) = 
+                old.discoveredBy == new.discoveredBy && old.label == new.label
         }
     }
 }

@@ -1,16 +1,26 @@
 R_DEF: Internal format may change without notice
 local
 color accent
+color accent_light
 color bg_main
+color brand_color
+color brand_color_dark
 color colorAccent
 color colorPrimary
 color colorPrimaryDark
 color divider
+color status_error
+color status_success
 color surface
+color surface_variant
 color text_primary
 color text_secondary
+drawable bg_bottom_sheet
+drawable bg_circle_indicator
+drawable bg_circle_indicator_inactive
 drawable chip_bg
 drawable ic_app_default
+id app_bar
 id btn_about
 id chip_group_filter
 id chip_group_methods
@@ -43,4 +53,8 @@ string app_name
 string author_info
 string close
 string version_format
+style ShapeAppearance.App.LargeComponent
+style ShapeAppearance.App.MediumComponent
 style Theme.AppInspector
+style Theme.AppInspector.BottomSheet
+style Widget.App.BottomSheet

@@ -1,12 +1,14 @@
 package com.appinspector.ui
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +22,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Setup system bars appearance for edge-to-edge/theming
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        
         setContentView(R.layout.activity_main)
 
         val repo = AppRepository(applicationContext)
@@ -71,41 +78,81 @@ class MainActivity : AppCompatActivity() {
         val allChip = Chip(this).apply {
             text = "全部"
             isCheckable = true
-            isChecked = true
             id = View.generateViewId()
+            chipStrokeWidth = 0f
+            
+            val states = arrayOf(
+                intArrayOf(android.R.attr.state_checked),
+                intArrayOf(-android.R.attr.state_checked)
+            )
+            val colors = intArrayOf(
+                ContextCompat.getColor(context, R.color.brand_color),
+                ContextCompat.getColor(context, R.color.surface_variant)
+            )
+            chipBackgroundColor = ColorStateList(states, colors)
+            
+            val textColors = intArrayOf(
+                ContextCompat.getColor(context, android.R.color.white),
+                ContextCompat.getColor(context, R.color.text_primary)
+            )
+            setTextColor(ColorStateList(states, textColors))
         }
         chipGroup.addView(allChip)
         allChip.setOnClickListener { viewModel.clearFilters() }
 
         // One chip per category
-        QueryMethod.Category.values().forEach { cat ->
+        QueryMethod.Category.entries.forEach { cat ->
+            val firstMethod = QueryMethod.entries.first { it.category == cat }
             val chip = Chip(this).apply {
+                tag = cat
                 text = cat.displayName
                 isCheckable = true
                 id = View.generateViewId()
-                val color = MethodColors.chipBgColorFor(QueryMethod.values().first { it.category == cat })
-                setChipBackgroundColor(android.content.res.ColorStateList.valueOf(color))
-                setTextColor(MethodColors.chipTextColor())
-                checkedIconTint = android.content.res.ColorStateList.valueOf(MethodColors.chipTextColor())
+                chipStrokeWidth = 0f
+                
+                val states = arrayOf(
+                    intArrayOf(android.R.attr.state_checked),
+                    intArrayOf(-android.R.attr.state_checked)
+                )
+                val colors = intArrayOf(
+                    MethodColors.chipTextColorFor(firstMethod),
+                    MethodColors.chipBgColorFor(firstMethod)
+                )
+                chipBackgroundColor = ColorStateList(states, colors)
+                
+                val textColors = intArrayOf(
+                    ContextCompat.getColor(context, android.R.color.white),
+                    MethodColors.chipTextColorFor(firstMethod)
+                )
+                setTextColor(ColorStateList(states, textColors))
             }
             chip.setOnClickListener {
-                // Toggle all methods in this category
-                QueryMethod.values().filter { it.category == cat }.forEach { m ->
-                    viewModel.toggleFilter(m)
-                }
+                viewModel.toggleFilter(cat)
             }
             chipGroup.addView(chip)
+        }
+
+        lifecycleScope.launch {
+            viewModel.activeCategories.collectLatest { active ->
+                allChip.isChecked = active.isEmpty()
+                for (i in 1 until chipGroup.childCount) {
+                    val chip = chipGroup.getChildAt(i) as Chip
+                    val cat = chip.tag as? QueryMethod.Category
+                    chip.isChecked = cat != null && cat in active
+                }
+            }
         }
     }
 
     private fun setupAboutButton() {
-        findViewById<ImageView>(R.id.btn_about).setOnClickListener {
+        findViewById<TextView>(R.id.btn_about).setOnClickListener {
             showAboutDialog()
         }
     }
 
     private fun showAboutDialog() {
         val versionName = try {
+            @Suppress("DEPRECATION")
             packageManager.getPackageInfo(packageName, 0).versionName
         } catch (e: Exception) {
             "Unknown"
@@ -143,9 +190,10 @@ class MainActivity : AppCompatActivity() {
                     is UiState.Ready -> {
                         progress.isVisible = false
                         rvApps.isVisible = true
-                        tvStatus.text = "显示 ${state.apps.size} / ${state.totalCount} 个应用"
-                        tvRoot.text = if (state.rootAvailable) "✓ Root已授权" else "✗ 非Root设备"
-                        tvRoot.setTextColor(if (state.rootAvailable) 0xFF43A047.toInt() else 0xFFB0BEC5.toInt())
+                        tvStatus.text = "共发现 ${state.apps.size} / ${state.totalCount} 个匹配应用"
+                        tvRoot.text = if (state.rootAvailable) "✓ 已获取 Root 权限" else "✗ 未获取 Root 权限"
+                        tvRoot.setTextColor(ContextCompat.getColor(this@MainActivity, 
+                            if (state.rootAvailable) R.color.status_success else R.color.text_secondary))
                         adapter.submitList(state.apps)
                     }
                     is UiState.Error -> {

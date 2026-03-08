@@ -4,20 +4,20 @@ package com.appinspector.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.appinspector.R;
+import com.google.android.material.card.MaterialCardView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
 
 public final class ItemMethodRowBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final MaterialCardView rootView;
 
   @NonNull
   public final TextView tvMethodCategory;
@@ -31,9 +31,9 @@ public final class ItemMethodRowBinding implements ViewBinding {
   @NonNull
   public final TextView tvMethodName;
 
-  private ItemMethodRowBinding(@NonNull LinearLayout rootView, @NonNull TextView tvMethodCategory,
-      @NonNull TextView tvMethodDesc, @NonNull TextView tvMethodFound,
-      @NonNull TextView tvMethodName) {
+  private ItemMethodRowBinding(@NonNull MaterialCardView rootView,
+      @NonNull TextView tvMethodCategory, @NonNull TextView tvMethodDesc,
+      @NonNull TextView tvMethodFound, @NonNull TextView tvMethodName) {
     this.rootView = rootView;
     this.tvMethodCategory = tvMethodCategory;
     this.tvMethodDesc = tvMethodDesc;
@@ -43,7 +43,7 @@ public final class ItemMethodRowBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public MaterialCardView getRoot() {
     return rootView;
   }
 
@@ -92,7 +92,7 @@ public final class ItemMethodRowBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemMethodRowBinding((LinearLayout) rootView, tvMethodCategory, tvMethodDesc,
+      return new ItemMethodRowBinding((MaterialCardView) rootView, tvMethodCategory, tvMethodDesc,
           tvMethodFound, tvMethodName);
     }
     String missingId = rootView.getResources().getResourceName(id);

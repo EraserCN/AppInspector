@@ -1,115 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_main">
 
-    <!-- Header Bar -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/surface"
-        android:elevation="4dp"
-        android:paddingBottom="8dp">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-        <LinearLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="12dp"
-            android:gravity="center_vertical">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="App Inspector"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary" />
+                android:orientation="vertical"
+                android:paddingTop="32dp"
+                android:paddingBottom="16dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
-            <TextView
-                android:id="@+id/tv_root_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="✗ 非Root"
-                android:textSize="12sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginEnd="12dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/btn_about"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_info_details"
-                app:tint="@color/accent"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/about" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="App Inspector"
+                        android:textSize="28sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/text_primary" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="4dp"
-            app:queryHint="搜索应用名/包名..."
-            app:iconifiedByDefault="false" />
+                    <TextView
+                        android:id="@+id/btn_about"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关于"
+                        android:textSize="14sp"
+                        android:textColor="@color/accent"
+                        android:fontFamily="sans-serif-medium"
+                        android:padding="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+                </LinearLayout>
 
-        <!-- Filter chips scroll -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+                <TextView
+                    android:id="@+id/tv_root_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✗ 非Root设备"
+                    android:textSize="13sp"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_secondary" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleLine="true"
-                app:singleSelection="false"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp" />
-        </HorizontalScrollView>
+                <!-- ColorOS Style Search Bar -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_variant">
 
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="加载中..."
-            android:textSize="12sp"
-            android:textColor="@color/text_secondary" />
-    </LinearLayout>
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/search_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:queryHint="搜索应用或包名"
+                        app:iconifiedByDefault="false"
+                        app:searchIcon="@null"
+                        app:queryBackground="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
 
-    <!-- Loading indicator -->
+                <!-- Filter chips scroll -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true"
+                        app:singleSelection="false" />
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="正在加载数据..."
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary" />
+            </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_apps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="64dp"
         android:indeterminate="true"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:indicatorColor="@color/accent" />
 
-    <!-- App list -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_apps"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:clipToPadding="false"
-        android:paddingBottom="16dp" />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

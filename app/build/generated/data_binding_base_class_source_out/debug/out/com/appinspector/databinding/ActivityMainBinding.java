@@ -4,16 +4,16 @@ package com.appinspector.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.appinspector.R;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import java.lang.NullPointerException;
@@ -22,10 +22,13 @@ import java.lang.String;
 
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final CoordinatorLayout rootView;
 
   @NonNull
-  public final ImageView btnAbout;
+  public final AppBarLayout appBar;
+
+  @NonNull
+  public final TextView btnAbout;
 
   @NonNull
   public final ChipGroup chipGroupFilter;
@@ -45,11 +48,12 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final TextView tvStatus;
 
-  private ActivityMainBinding(@NonNull LinearLayout rootView, @NonNull ImageView btnAbout,
-      @NonNull ChipGroup chipGroupFilter, @NonNull CircularProgressIndicator progress,
-      @NonNull RecyclerView rvApps, @NonNull SearchView searchView, @NonNull TextView tvRootStatus,
-      @NonNull TextView tvStatus) {
+  private ActivityMainBinding(@NonNull CoordinatorLayout rootView, @NonNull AppBarLayout appBar,
+      @NonNull TextView btnAbout, @NonNull ChipGroup chipGroupFilter,
+      @NonNull CircularProgressIndicator progress, @NonNull RecyclerView rvApps,
+      @NonNull SearchView searchView, @NonNull TextView tvRootStatus, @NonNull TextView tvStatus) {
     this.rootView = rootView;
+    this.appBar = appBar;
     this.btnAbout = btnAbout;
     this.chipGroupFilter = chipGroupFilter;
     this.progress = progress;
@@ -61,7 +65,7 @@ public final class ActivityMainBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public CoordinatorLayout getRoot() {
     return rootView;
   }
 
@@ -86,8 +90,14 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.app_bar;
+      AppBarLayout appBar = ViewBindings.findChildViewById(rootView, id);
+      if (appBar == null) {
+        break missingId;
+      }
+
       id = R.id.btn_about;
-      ImageView btnAbout = ViewBindings.findChildViewById(rootView, id);
+      TextView btnAbout = ViewBindings.findChildViewById(rootView, id);
       if (btnAbout == null) {
         break missingId;
       }
@@ -128,8 +138,8 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((LinearLayout) rootView, btnAbout, chipGroupFilter, progress,
-          rvApps, searchView, tvRootStatus, tvStatus);
+      return new ActivityMainBinding((CoordinatorLayout) rootView, appBar, btnAbout,
+          chipGroupFilter, progress, rvApps, searchView, tvRootStatus, tvStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

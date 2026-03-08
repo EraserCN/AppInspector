@@ -28,23 +28,23 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
     private val _allApps = MutableStateFlow<List<AppInfo>>(emptyList())
     private val _rootAvailable = MutableStateFlow(false)
     private val _searchQuery = MutableStateFlow("")
-    private val _activeFilters = MutableStateFlow<Set<QueryMethod>>(emptySet())
+    private val _activeCategories = MutableStateFlow<Set<QueryMethod.Category>>(emptySet())
     private val _loading = MutableStateFlow(true)
     private val _error = MutableStateFlow<String?>(null)
 
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-    val activeFilters: StateFlow<Set<QueryMethod>> = _activeFilters.asStateFlow()
+    val activeCategories: StateFlow<Set<QueryMethod.Category>> = _activeCategories.asStateFlow()
     val rootAvailable: StateFlow<Boolean> = _rootAvailable.asStateFlow()
 
+    // 使用分段合并 (combine) 以避免 6 个以上参数时的类型推断问题
+    private val filterState = combine(_searchQuery, _activeCategories, _rootAvailable) { query, categories, root ->
+        Triple(query, categories, root)
+    }
+
     val uiState: StateFlow<UiState> = combine(
-        _loading, _error, _allApps, _searchQuery, _activeFilters, _rootAvailable
-    ) { values ->
-        val loading = values[0] as Boolean
-        val error = values[1] as? String
-        val apps = values[2] as List<AppInfo>
-        val query = values[3] as String
-        val filters = values[4] as Set<QueryMethod>
-        val root = values[5] as Boolean
+        _loading, _error, _allApps, filterState
+    ) { loading, error, apps, filters ->
+        val (query, categories, root) = filters
 
         when {
             loading -> UiState.Loading
@@ -54,8 +54,8 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
                     val matchesQuery = query.isBlank() ||
                         app.label.contains(query, ignoreCase = true) ||
                         app.packageName.contains(query, ignoreCase = true)
-                    val matchesFilters = filters.isEmpty() ||
-                        app.discoveredBy.any { it in filters }
+                    val matchesFilters = categories.isEmpty() ||
+                        app.discoveredBy.any { method -> method.category in categories }
                     matchesQuery && matchesFilters
                 }
                 UiState.Ready(filtered, apps.size, root)
@@ -88,13 +88,13 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
         _searchQuery.value = query
     }
 
-    fun toggleFilter(method: QueryMethod) {
-        val current = _activeFilters.value.toMutableSet()
-        if (method in current) current.remove(method) else current.add(method)
-        _activeFilters.value = current
+    fun toggleFilter(category: QueryMethod.Category) {
+        val current = _activeCategories.value.toMutableSet()
+        if (category in current) current.remove(category) else current.add(category)
+        _activeCategories.value = current
     }
 
     fun clearFilters() {
-        _activeFilters.value = emptySet()
+        _activeCategories.value = emptySet()
     }
 }

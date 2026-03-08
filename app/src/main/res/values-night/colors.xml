@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ColorOS / OxygenOS 15/16 Dark Mode Palette -->
+    <color name="bg_main">#000000</color>
+    <color name="surface">#1C1C1E</color>
+    <color name="surface_variant">#2C2C2E</color>
+
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8E8E93</color>
+
+    <color name="accent">#0A84FF</color> <!-- OxygenOS Dark Blue -->
+    <color name="accent_light">#002B54</color>
+
+    <color name="brand_color">#0A84FF</color>
+    <color name="brand_color_dark">#0056B3</color>
+
+    <color name="divider">#38383A</color>
+
+    <!-- Status colors -->
+    <color name="status_success">#32D74B</color>
+    <color name="status_error">#FF453A</color>
+</resources>

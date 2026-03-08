@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">App Inspector</string>
+    <string name="about">关于</string>
+    <string name="app_description">App Inspector 是一款用于查看 Android 应用详细信息、权限及查询方式的工具。支持 Root 环境下的深度扫描。</string>
+    <string name="author_info">作者: EraserCN</string>
+    <string name="version_format">版本: %s</string>
+    <string name="close">关闭</string>
+</resources>

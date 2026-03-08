@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_item_app.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_app.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_ic_app_default.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\ic_app_default.xml"
+    },
+    {
+        "merged": "com.appinspector.app-merged_res-35:/layout_activity_main.xml.flat",
+        "source": "com.appinspector.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\drawable_chip_bg.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\drawable\\chip_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_bottom_sheet_detail.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\bottom_sheet_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-merged_res-35:\\layout_item_method_row.xml.flat",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_method_row.xml"
+    }
+]

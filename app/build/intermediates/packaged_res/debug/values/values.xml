@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#6200EE</color>
+    <color name="bg_main">#F0F2F5</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="divider">#E5E7EB</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#6B7280</color>
+    <string name="about">关于</string>
+    <string name="app_description">App Inspector 是一款用于查看 Android 应用详细信息、权限及查询方式的工具。支持 Root 环境下的深度扫描。</string>
+    <string name="app_name">App Inspector</string>
+    <string name="author_info">作者: EraserCN</string>
+    <string name="close">关闭</string>
+    <string name="version_format">版本: %s</string>
+    <style name="Theme.AppInspector" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/bg_main</item>
+    </style>
+</resources>

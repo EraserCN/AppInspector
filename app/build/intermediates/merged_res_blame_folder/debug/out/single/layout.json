@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-mergeDebugResources-34:\\layout\\item_method_row.xml",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_method_row.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-mergeDebugResources-34:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.appinspector.app-mergeDebugResources-34:/layout/activity_main.xml",
+        "source": "com.appinspector.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-mergeDebugResources-34:\\layout\\item_app.xml",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\item_app.xml"
+    },
+    {
+        "merged": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-mergeDebugResources-34:\\layout\\bottom_sheet_detail.xml",
+        "source": "C:\\Users\\Eraser\\.gradle\\daemon\\8.5\\com.appinspector.app-main-37:\\layout\\bottom_sheet_detail.xml"
+    }
+]

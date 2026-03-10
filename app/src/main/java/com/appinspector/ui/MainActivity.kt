@@ -1,7 +1,9 @@
 package com.appinspector.ui
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -18,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.appinspector.BuildConfig
 import com.appinspector.R
 import com.appinspector.data.AppRepository
 import com.appinspector.data.QueryMethod
@@ -25,7 +28,6 @@ import com.appinspector.util.MethodColors
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.flow.collectLatest
@@ -49,13 +51,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // 2. Handle System Bar Insets
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { view, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            // Background is surface, but we want the list and stats to not be covered by bars
-            // We use padding on containers instead of root fitsSystemWindows
             findViewById<View>(R.id.app_bar).updatePadding(top = systemBars.top)
             findViewById<View>(R.id.layout_stats_content).updatePadding(top = systemBars.top)
-            findViewById<View>(R.id.bottom_navigation).updatePadding(bottom = systemBars.bottom)
+            findViewById<View>(R.id.layout_about_content).updatePadding(top = systemBars.top)
             insets
         }
 
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         setupTabs()
         setupFilterChips()
         setupStatsPage()
-        setupAboutButton()
+        setupAboutPage()
         observeState()
     }
 
@@ -81,17 +81,26 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val layoutApps = findViewById<View>(R.id.layout_apps)
         val layoutStats = findViewById<View>(R.id.layout_stats)
+        val layoutAbout = findViewById<View>(R.id.layout_about)
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_apps -> {
                     layoutApps.isVisible = true
                     layoutStats.isVisible = false
+                    layoutAbout.isVisible = false
                     true
                 }
                 R.id.nav_stats -> {
                     layoutApps.isVisible = false
                     layoutStats.isVisible = true
+                    layoutAbout.isVisible = false
+                    true
+                }
+                R.id.nav_about -> {
+                    layoutApps.isVisible = false
+                    layoutStats.isVisible = false
+                    layoutAbout.isVisible = true
                     true
                 }
                 else -> false
@@ -208,20 +217,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupAboutButton() {
-        findViewById<TextView>(R.id.btn_about).setOnClickListener { showAboutDialog() }
-    }
-
-    private fun showAboutDialog() {
+    private fun setupAboutPage() {
         val versionName = try { packageManager.getPackageInfo(packageName, 0).versionName } catch (e: Exception) { "Unknown" }
-        val aboutMessage = buildString {
-            append(getString(R.string.app_description))
-            append("\n\n")
-            append(getString(R.string.version_format, versionName))
-            append("\n")
-            append(getString(R.string.author_info))
+        findViewById<TextView>(R.id.tv_about_version).text = getString(R.string.version_format, versionName)
+        findViewById<TextView>(R.id.tv_compiler_info).text = BuildConfig.COMPILER_INFO
+        findViewById<TextView>(R.id.tv_compiled_platform).text = BuildConfig.COMPILED_PLATFORM
+        findViewById<TextView>(R.id.tv_build_date).text = BuildConfig.BUILD_DATE
+        findViewById<TextView>(R.id.tv_target_sdk).text = BuildConfig.TARGET_SDK.toString()
+        
+        findViewById<View>(R.id.btn_github).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url)))
+            startActivity(intent)
         }
-        MaterialAlertDialogBuilder(this).setTitle(R.string.about).setMessage(aboutMessage).setPositiveButton(R.string.close, null).show()
     }
 
     private fun observeState() {

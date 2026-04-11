@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#007AFF</color>
+    <color name="accent_light">#E5F1FF</color>
+    <color name="bg_main">#F6F7F9</color>
+    <color name="brand_color">#007AFF</color>
+    <color name="brand_color_dark">#0056B3</color>
+    <color name="colorAccent">@color/accent</color>
+    <color name="colorPrimary">@color/brand_color</color>
+    <color name="colorPrimaryDark">@color/brand_color_dark</color>
+    <color name="divider">#E5E5EA</color>
+    <color name="nav_item_selected">#007AFF</color>
+    <color name="nav_item_unselected">#86868B</color>
+    <color name="status_error">#FF3B30</color>
+    <color name="status_success">#34C759</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F1F3F5</color>
+    <color name="text_primary">#1D1D1F</color>
+    <color name="text_secondary">#86868B</color>
+    <string name="about">关于</string>
+    <string name="app_description">App Inspector 是一款用于查看 Android 应用详细信息、权限及查询方式的工具。支持 Root 环境下的深度扫描。</string>
+    <string name="app_name">App Inspector</string>
+    <string name="author_info">作者: EraserCN</string>
+    <string name="close">关闭</string>
+    <string name="version_format">版本: %s</string>
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="Theme.AppInspector" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_color</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">@color/accent_light</item>
+        <item name="colorOnPrimaryContainer">@color/brand_color_dark</item>
+
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <item name="android:windowBackground">?attr/colorSurface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+    </style>
+    <style name="Theme.AppInspector.BottomSheet" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet</item>
+    </style>
+    <style name="Widget.App.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
+        <item name="backgroundTint">?attr/colorSurface</item>
+    </style>
+</resources>

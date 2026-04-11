@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.appinspector.R;
 import com.appinspector.ui.PieChartView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
@@ -41,13 +43,43 @@ public final class ActivityMainBinding implements ViewBinding {
   public final BottomNavigationView bottomNavigation;
 
   @NonNull
-  public final TextView btnAbout;
+  public final MaterialButton btnExportCsv;
+
+  @NonNull
+  public final MaterialButton btnGithub;
+
+  @NonNull
+  public final MaterialButton btnSelectAll;
+
+  @NonNull
+  public final MaterialButton btnSelectNone;
+
+  @NonNull
+  public final MaterialButton btnSelectSystem;
+
+  @NonNull
+  public final MaterialButton btnSelectUser;
 
   @NonNull
   public final ChipGroup chipGroupFilter;
 
   @NonNull
+  public final ImageView ivAboutIcon;
+
+  @NonNull
+  public final NestedScrollView layoutAbout;
+
+  @NonNull
+  public final LinearLayout layoutAboutContent;
+
+  @NonNull
   public final CoordinatorLayout layoutApps;
+
+  @NonNull
+  public final LinearLayout layoutExport;
+
+  @NonNull
+  public final LinearLayout layoutExportContent;
 
   @NonNull
   public final NestedScrollView layoutStats;
@@ -71,6 +103,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final RecyclerView rvApps;
 
   @NonNull
+  public final RecyclerView rvExport;
+
+  @NonNull
   public final RecyclerView rvStatsPage;
 
   @NonNull
@@ -83,28 +118,64 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TabLayout tabLayoutCategories;
 
   @NonNull
+  public final TextView tvAboutVersion;
+
+  @NonNull
+  public final TextView tvBuildDate;
+
+  @NonNull
+  public final TextView tvCompiledPlatform;
+
+  @NonNull
+  public final TextView tvCompilerInfo;
+
+  @NonNull
+  public final TextView tvExportStatus;
+
+  @NonNull
   public final TextView tvRootStatus;
 
   @NonNull
   public final TextView tvStatus;
 
+  @NonNull
+  public final TextView tvTargetSdk;
+
   private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull AppBarLayout appBar,
       @NonNull LinearLayout appBarContent, @NonNull BottomNavigationView bottomNavigation,
-      @NonNull TextView btnAbout, @NonNull ChipGroup chipGroupFilter,
-      @NonNull CoordinatorLayout layoutApps, @NonNull NestedScrollView layoutStats,
+      @NonNull MaterialButton btnExportCsv, @NonNull MaterialButton btnGithub,
+      @NonNull MaterialButton btnSelectAll, @NonNull MaterialButton btnSelectNone,
+      @NonNull MaterialButton btnSelectSystem, @NonNull MaterialButton btnSelectUser,
+      @NonNull ChipGroup chipGroupFilter, @NonNull ImageView ivAboutIcon,
+      @NonNull NestedScrollView layoutAbout, @NonNull LinearLayout layoutAboutContent,
+      @NonNull CoordinatorLayout layoutApps, @NonNull LinearLayout layoutExport,
+      @NonNull LinearLayout layoutExportContent, @NonNull NestedScrollView layoutStats,
       @NonNull LinearLayout layoutStatsContent, @NonNull View navDivider,
       @NonNull PieChartView pieChart, @NonNull CircularProgressIndicator progress,
       @NonNull ConstraintLayout rootLayout, @NonNull RecyclerView rvApps,
-      @NonNull RecyclerView rvStatsPage, @NonNull HorizontalScrollView scrollChips,
-      @NonNull SearchView searchView, @NonNull TabLayout tabLayoutCategories,
-      @NonNull TextView tvRootStatus, @NonNull TextView tvStatus) {
+      @NonNull RecyclerView rvExport, @NonNull RecyclerView rvStatsPage,
+      @NonNull HorizontalScrollView scrollChips, @NonNull SearchView searchView,
+      @NonNull TabLayout tabLayoutCategories, @NonNull TextView tvAboutVersion,
+      @NonNull TextView tvBuildDate, @NonNull TextView tvCompiledPlatform,
+      @NonNull TextView tvCompilerInfo, @NonNull TextView tvExportStatus,
+      @NonNull TextView tvRootStatus, @NonNull TextView tvStatus, @NonNull TextView tvTargetSdk) {
     this.rootView = rootView;
     this.appBar = appBar;
     this.appBarContent = appBarContent;
     this.bottomNavigation = bottomNavigation;
-    this.btnAbout = btnAbout;
+    this.btnExportCsv = btnExportCsv;
+    this.btnGithub = btnGithub;
+    this.btnSelectAll = btnSelectAll;
+    this.btnSelectNone = btnSelectNone;
+    this.btnSelectSystem = btnSelectSystem;
+    this.btnSelectUser = btnSelectUser;
     this.chipGroupFilter = chipGroupFilter;
+    this.ivAboutIcon = ivAboutIcon;
+    this.layoutAbout = layoutAbout;
+    this.layoutAboutContent = layoutAboutContent;
     this.layoutApps = layoutApps;
+    this.layoutExport = layoutExport;
+    this.layoutExportContent = layoutExportContent;
     this.layoutStats = layoutStats;
     this.layoutStatsContent = layoutStatsContent;
     this.navDivider = navDivider;
@@ -112,12 +183,19 @@ public final class ActivityMainBinding implements ViewBinding {
     this.progress = progress;
     this.rootLayout = rootLayout;
     this.rvApps = rvApps;
+    this.rvExport = rvExport;
     this.rvStatsPage = rvStatsPage;
     this.scrollChips = scrollChips;
     this.searchView = searchView;
     this.tabLayoutCategories = tabLayoutCategories;
+    this.tvAboutVersion = tvAboutVersion;
+    this.tvBuildDate = tvBuildDate;
+    this.tvCompiledPlatform = tvCompiledPlatform;
+    this.tvCompilerInfo = tvCompilerInfo;
+    this.tvExportStatus = tvExportStatus;
     this.tvRootStatus = tvRootStatus;
     this.tvStatus = tvStatus;
+    this.tvTargetSdk = tvTargetSdk;
   }
 
   @Override
@@ -165,9 +243,39 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btn_about;
-      TextView btnAbout = ViewBindings.findChildViewById(rootView, id);
-      if (btnAbout == null) {
+      id = R.id.btn_export_csv;
+      MaterialButton btnExportCsv = ViewBindings.findChildViewById(rootView, id);
+      if (btnExportCsv == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_github;
+      MaterialButton btnGithub = ViewBindings.findChildViewById(rootView, id);
+      if (btnGithub == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_select_all;
+      MaterialButton btnSelectAll = ViewBindings.findChildViewById(rootView, id);
+      if (btnSelectAll == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_select_none;
+      MaterialButton btnSelectNone = ViewBindings.findChildViewById(rootView, id);
+      if (btnSelectNone == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_select_system;
+      MaterialButton btnSelectSystem = ViewBindings.findChildViewById(rootView, id);
+      if (btnSelectSystem == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_select_user;
+      MaterialButton btnSelectUser = ViewBindings.findChildViewById(rootView, id);
+      if (btnSelectUser == null) {
         break missingId;
       }
 
@@ -177,9 +285,39 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.iv_about_icon;
+      ImageView ivAboutIcon = ViewBindings.findChildViewById(rootView, id);
+      if (ivAboutIcon == null) {
+        break missingId;
+      }
+
+      id = R.id.layout_about;
+      NestedScrollView layoutAbout = ViewBindings.findChildViewById(rootView, id);
+      if (layoutAbout == null) {
+        break missingId;
+      }
+
+      id = R.id.layout_about_content;
+      LinearLayout layoutAboutContent = ViewBindings.findChildViewById(rootView, id);
+      if (layoutAboutContent == null) {
+        break missingId;
+      }
+
       id = R.id.layout_apps;
       CoordinatorLayout layoutApps = ViewBindings.findChildViewById(rootView, id);
       if (layoutApps == null) {
+        break missingId;
+      }
+
+      id = R.id.layout_export;
+      LinearLayout layoutExport = ViewBindings.findChildViewById(rootView, id);
+      if (layoutExport == null) {
+        break missingId;
+      }
+
+      id = R.id.layout_export_content;
+      LinearLayout layoutExportContent = ViewBindings.findChildViewById(rootView, id);
+      if (layoutExportContent == null) {
         break missingId;
       }
 
@@ -221,6 +359,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.rv_export;
+      RecyclerView rvExport = ViewBindings.findChildViewById(rootView, id);
+      if (rvExport == null) {
+        break missingId;
+      }
+
       id = R.id.rv_stats_page;
       RecyclerView rvStatsPage = ViewBindings.findChildViewById(rootView, id);
       if (rvStatsPage == null) {
@@ -245,6 +389,36 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_about_version;
+      TextView tvAboutVersion = ViewBindings.findChildViewById(rootView, id);
+      if (tvAboutVersion == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_build_date;
+      TextView tvBuildDate = ViewBindings.findChildViewById(rootView, id);
+      if (tvBuildDate == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_compiled_platform;
+      TextView tvCompiledPlatform = ViewBindings.findChildViewById(rootView, id);
+      if (tvCompiledPlatform == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_compiler_info;
+      TextView tvCompilerInfo = ViewBindings.findChildViewById(rootView, id);
+      if (tvCompilerInfo == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_export_status;
+      TextView tvExportStatus = ViewBindings.findChildViewById(rootView, id);
+      if (tvExportStatus == null) {
+        break missingId;
+      }
+
       id = R.id.tv_root_status;
       TextView tvRootStatus = ViewBindings.findChildViewById(rootView, id);
       if (tvRootStatus == null) {
@@ -257,10 +431,19 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_target_sdk;
+      TextView tvTargetSdk = ViewBindings.findChildViewById(rootView, id);
+      if (tvTargetSdk == null) {
+        break missingId;
+      }
+
       return new ActivityMainBinding((ConstraintLayout) rootView, appBar, appBarContent,
-          bottomNavigation, btnAbout, chipGroupFilter, layoutApps, layoutStats, layoutStatsContent,
-          navDivider, pieChart, progress, rootLayout, rvApps, rvStatsPage, scrollChips, searchView,
-          tabLayoutCategories, tvRootStatus, tvStatus);
+          bottomNavigation, btnExportCsv, btnGithub, btnSelectAll, btnSelectNone, btnSelectSystem,
+          btnSelectUser, chipGroupFilter, ivAboutIcon, layoutAbout, layoutAboutContent, layoutApps,
+          layoutExport, layoutExportContent, layoutStats, layoutStatsContent, navDivider, pieChart,
+          progress, rootLayout, rvApps, rvExport, rvStatsPage, scrollChips, searchView,
+          tabLayoutCategories, tvAboutVersion, tvBuildDate, tvCompiledPlatform, tvCompilerInfo,
+          tvExportStatus, tvRootStatus, tvStatus, tvTargetSdk);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

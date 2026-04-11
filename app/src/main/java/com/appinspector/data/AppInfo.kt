@@ -7,6 +7,7 @@ data class AppInfo(
     val label: String,
     val icon: Drawable?,
     val isSystemApp: Boolean,
+    var launchActivity: String? = null,
     val discoveredBy: MutableSet<QueryMethod> = mutableSetOf()
 ) {
     /** Shorthand: is this app found by at least one Root method? */

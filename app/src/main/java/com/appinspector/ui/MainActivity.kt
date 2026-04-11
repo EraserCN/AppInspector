@@ -6,8 +6,10 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -26,19 +28,29 @@ import com.appinspector.data.AppRepository
 import com.appinspector.data.QueryMethod
 import com.appinspector.util.MethodColors
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.OutputStreamWriter
+import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: AppListAdapter
+    private lateinit var exportAdapter: AppExportAdapter
     private lateinit var statsAdapter: StatsAdapter
     private var currentCategory: QueryMethod.Category? = null
+
+    private val createDocumentLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri ->
+        uri?.let { exportDataToUri(it) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             findViewById<View>(R.id.app_bar).updatePadding(top = systemBars.top)
             findViewById<View>(R.id.layout_stats_content).updatePadding(top = systemBars.top)
+            findViewById<View>(R.id.layout_export_content).updatePadding(top = systemBars.top)
             findViewById<View>(R.id.layout_about_content).updatePadding(top = systemBars.top)
             insets
         }
@@ -73,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         setupTabs()
         setupFilterChips()
         setupStatsPage()
+        setupExportPage()
         setupAboutPage()
         observeState()
     }
@@ -81,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val layoutApps = findViewById<View>(R.id.layout_apps)
         val layoutStats = findViewById<View>(R.id.layout_stats)
+        val layoutExport = findViewById<View>(R.id.layout_export)
         val layoutAbout = findViewById<View>(R.id.layout_about)
 
         bottomNav.setOnItemSelectedListener { item ->
@@ -88,18 +103,28 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_apps -> {
                     layoutApps.isVisible = true
                     layoutStats.isVisible = false
+                    layoutExport.isVisible = false
                     layoutAbout.isVisible = false
                     true
                 }
                 R.id.nav_stats -> {
                     layoutApps.isVisible = false
                     layoutStats.isVisible = true
+                    layoutExport.isVisible = false
+                    layoutAbout.isVisible = false
+                    true
+                }
+                R.id.nav_export -> {
+                    layoutApps.isVisible = false
+                    layoutStats.isVisible = false
+                    layoutExport.isVisible = true
                     layoutAbout.isVisible = false
                     true
                 }
                 R.id.nav_about -> {
                     layoutApps.isVisible = false
                     layoutStats.isVisible = false
+                    layoutExport.isVisible = false
                     layoutAbout.isVisible = true
                     true
                 }
@@ -217,6 +242,64 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupExportPage() {
+        val rvExport = findViewById<RecyclerView>(R.id.rv_export)
+        val btnExport = findViewById<MaterialButton>(R.id.btn_export_csv)
+        
+        exportAdapter = AppExportAdapter { count ->
+            btnExport.text = "导出已选 ($count)"
+        }
+        
+        rvExport.layoutManager = LinearLayoutManager(this)
+        rvExport.adapter = exportAdapter
+
+        findViewById<View>(R.id.btn_select_all).setOnClickListener { exportAdapter.selectAll() }
+        findViewById<View>(R.id.btn_select_none).setOnClickListener { exportAdapter.selectNone() }
+        findViewById<View>(R.id.btn_select_user).setOnClickListener { exportAdapter.selectSystem(false) }
+        findViewById<View>(R.id.btn_select_system).setOnClickListener { exportAdapter.selectSystem(true) }
+
+        btnExport.setOnClickListener {
+            if (exportAdapter.selectedPackages.isEmpty()) {
+                Toast.makeText(this, "请先选择要导出的应用", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            createDocumentLauncher.launch("AppInspector_Export_${System.currentTimeMillis()}.csv")
+        }
+    }
+
+    private fun exportDataToUri(uri: Uri) {
+        val state = viewModel.uiState.value as? UiState.Ready ?: return
+        val selectedPkgs = exportAdapter.selectedPackages
+        val apps = state.apps.filter { it.packageName in selectedPkgs }
+        val tvStatus = findViewById<TextView>(R.id.tv_export_status)
+        
+        lifecycleScope.launch {
+            try {
+                tvStatus.text = "正在导出..."
+                withContext(Dispatchers.IO) {
+                    contentResolver.openOutputStream(uri)?.use { outputStream ->
+                        OutputStreamWriter(outputStream, Charset.forName("UTF-8")).use { writer ->
+                            writer.write("\uFEFF")
+                            writer.write("应用名称,包名,启动类\n")
+                            apps.forEach { app ->
+                                val label = app.label.replace(",", " ")
+                                val pkg = app.packageName
+                                val launch = app.launchActivity ?: "无"
+                                writer.write("$label,$pkg,$launch\n")
+                            }
+                            writer.flush()
+                        }
+                    }
+                }
+                tvStatus.text = "导出成功！已保存 ${apps.size} 个应用。"
+                Toast.makeText(this@MainActivity, "导出成功", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                tvStatus.text = "导出失败: ${e.message}"
+                Toast.makeText(this@MainActivity, "导出失败", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     private fun setupAboutPage() {
         val versionName = try { packageManager.getPackageInfo(packageName, 0).versionName } catch (e: Exception) { "Unknown" }
         findViewById<TextView>(R.id.tv_about_version).text = getString(R.string.version_format, versionName)
@@ -252,6 +335,7 @@ class MainActivity : AppCompatActivity() {
                         tvRoot.text = if (state.rootAvailable) "✓ 已获取 Root 权限" else "✗ 未获取 Root 权限"
                         tvRoot.setTextColor(ContextCompat.getColor(this@MainActivity, if (state.rootAvailable) R.color.status_success else R.color.text_secondary))
                         adapter.submitList(state.apps)
+                        exportAdapter.submitList(state.apps)
                     }
                     is UiState.Error -> {
                         progress.isVisible = false

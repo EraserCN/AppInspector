@@ -14,8 +14,8 @@ android {
         applicationId = "com.appinspector"
         minSdk = 21
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.2"
+        versionCode = 4
+        versionName = "1.3"
         
         buildConfigField "String", "COMPILER_INFO", "\"Kotlin ${libs.versions.kotlin.get()}\""
         buildConfigField "String", "COMPILED_PLATFORM", "\"${System.getProperty("os.name")} ${System.getProperty("os.version")}\""

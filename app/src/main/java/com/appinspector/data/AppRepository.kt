@@ -234,6 +234,9 @@ class AppRepository(private val context: Context) {
         val label = pm.getApplicationLabel(ai).toString()
         val icon = runCatching { pm.getApplicationIcon(targetPackage) }.getOrNull()
         val isSystem = (ai.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
-        AppInfo(targetPackage, label, icon, isSystem)
+        
+        val launchActivity = pm.getLaunchIntentForPackage(targetPackage)?.component?.className
+        
+        AppInfo(targetPackage, label, icon, isSystem, launchActivity)
     }.getOrNull()
 }
